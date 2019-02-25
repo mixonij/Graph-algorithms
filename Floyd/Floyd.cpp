@@ -93,7 +93,7 @@ void generate(int n, int **mas) {
 				matrF << 0 << " ";
 			}
 			else {
-				int t = rand() % 50;
+				int t = rand() % 50 + 1;
 				mas[i][j] = t;
 				matrF << t << " ";
 			}
@@ -281,8 +281,8 @@ int main(int argc, char* argv[])
 				mas[i] = new int[num];
 				h[i] = new int[num];
 			}
-			//generate(num, mas);
-			load(mas, num);
+			generate(num, mas);
+			//load(mas, num);
 			FU(mas, num, h);
 			std::cout << "N = " << num << " Time: " << MPI_Wtime() - startTime << std::endl;
 			for (int i = 0; i < num; i++) {
