@@ -93,7 +93,7 @@ void generate(int n, int **mas) {
 				matrF << 0 << " ";
 			}
 			else {
-				int t = rand() % 50 + 1;
+				int t = rand() % 50;
 				mas[i][j] = t;
 				matrF << t << " ";
 			}
@@ -224,6 +224,16 @@ void Slave(int rank, int S) {
 
 	// Получение матрицы
 	MPI_Bcast(data, N*N, MPI_INT, 0, MPI_COMM_WORLD);
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			if (i == j) 
+				data[i*N + j] = 0;
+			else {
+				if (data[i*N + j] == 0) 
+					data[i*N + j] = 999;
+			}
+		}
+	}
 
 	/*if (rank == 4) {
 
@@ -281,8 +291,8 @@ int main(int argc, char* argv[])
 				mas[i] = new int[num];
 				h[i] = new int[num];
 			}
-			generate(num, mas);
-			//load(mas, num);
+			//generate(num, mas);
+			load(mas, num);
 			FU(mas, num, h);
 			std::cout << "N = " << num << " Time: " << MPI_Wtime() - startTime << std::endl;
 			for (int i = 0; i < num; i++) {
